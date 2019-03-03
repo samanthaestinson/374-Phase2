@@ -34,52 +34,6 @@ ARCHITECTURE phase2_tb_arch OF phase2_tb IS
   SIGNAL register_in_out_port_tb : std_logic; --Out port enable signal
   SIGNAL In_port_in_tb : std_logic_vector(31 downto 0); --In port enable signal
   SIGNAL Out_port_output_tb : std_logic_vector(31 downto 0); --Out port enable signal
-  
-  TYPE State IS (defaultA, defaultB, load_case1_T0A, load_case1_T0B, load_case1_T1A, load_case1_T1B, load_case1_T2A, load_case1_T2B, load_case1_T3A, load_case1_T3B, load_case1_T4A, load_case1_T4B, load_case1_T5A, load_case1_T5B, load_case1_T6A, load_case1_T6B, load_case1_T7A, load_case1_T7B, 
-						load_case2_T0A, load_case2_T0B, load_case2_T1A, load_case2_T1B, load_case2_T2A, load_case2_T2B, load_case2_T3A, load_case2_T3B, load_case2_T4A, load_case2_T4B, load_case2_T5A, load_case2_T5B, load_case2_T6A, load_case2_T6B, load_case2_T7A, load_case2_T7B,
-						load_case3_T0A, load_case3_T0B, load_case3_T1A, load_case3_T1B, load_case3_T2A, load_case3_T2B, load_case3_T3A, load_case3_T3B, load_case3_T4A, load_case3_T4B, load_case3_T5A, load_case3_T5B, 
-						load_case4_T0A, load_case4_T0B, load_case4_T1A, load_case4_T1B, load_case4_T2A, load_case4_T2B, load_case4_T3A, load_case4_T3B, load_case4_T4A, load_case4_T4B, load_case4_T5A, load_case4_T5B, 
-						load_case5_T0A, load_case5_T0B, load_case5_T1A, load_case5_T1B, load_case5_T2A, load_case5_T2B, load_case5_T3A, load_case5_T3B, load_case5_T4A, load_case5_T4B, load_case5_T5A, load_case5_T5B, load_case5_T6A, load_case5_T6B,
-						
-						store_reg_init_T0A, store_reg_init_T0B, store_reg_init_T1A, store_reg_init_T1B, store_reg_init_T2A, store_reg_init_T2B, store_reg_init_T3A, store_reg_init_T3B, store_reg_init_T4A, store_reg_init_T4B, store_reg_init_T5A, store_reg_init_T5B,
-						store_case1_T0A, store_case1_T0B, store_case1_T1A, store_case1_T1B, store_case1_T2A, store_case1_T2B, store_case1_T3A, store_case1_T3B, store_case1_T4A, store_case1_T4B, store_case1_T5A, store_case1_T5B, store_case1_T6A, store_case1_T6B, store_case1_T7A, store_case1_T7B,
-						store_check1_T0A, store_check1_T0B, store_check1_T1A, store_check1_T1B, store_check1_T2A, store_check1_T2B, store_check1_T3A, store_check1_T3B, store_check1_T4A, store_check1_T4B, store_check1_T5A, store_check1_T5B, store_check1_T6A, store_check1_T6B, store_check1_T7A, store_check1_T7B,
-						store_case2_T0A, store_case2_T0B, store_case2_T1A, store_case2_T1B, store_case2_T2A, store_case2_T2B, store_case2_T3A, store_case2_T3B, store_case2_T4A, store_case2_T4B, store_case2_T5A, store_case2_T5B, store_case2_T6A, store_case2_T6B, store_case2_T7A, store_case2_T7B,
-						store_check2_T0A, store_check2_T0B, store_check2_T1A, store_check2_T1B, store_check2_T2A, store_check2_T2B, store_check2_T3A, store_check2_T3B, store_check2_T4A, store_check2_T4B, store_check2_T5A, store_check2_T5B, store_check2_T6A, store_check2_T6B, store_check2_T7A, store_check2_T7B,
-						store_case3_T0A, store_case3_T0B, store_case3_T1A, store_case3_T1B, store_case3_T2A, store_case3_T2B, store_case3_T3A, store_case3_T3B, store_case3_T4A, store_case3_T4B, store_case3_T5A, store_case3_T5B, store_case3_T6A, store_case3_T6B,
-						store_check3_T0A, store_check3_T0B, store_check3_T1A, store_check3_T1B, store_check3_T2A, store_check3_T2B, store_check3_T3A, store_check3_T3B, store_check3_T4A, store_check3_T4B, store_check3_T5A, store_check3_T5B, store_check3_T6A, store_check3_T6B, store_check3_T7A, store_check3_T7B,
-						
-						ALU_case1_T0A, ALU_case1_T0B, ALU_case1_T1A, ALU_case1_T1B, ALU_case1_T2A, ALU_case1_T2B, ALU_case1_T3A, ALU_case1_T3B, ALU_case1_T4A, ALU_case1_T4B, ALU_case1_T5A, ALU_case1_T5B,
-						ALU_case2_T0A, ALU_case2_T0B, ALU_case2_T1A, ALU_case2_T1B, ALU_case2_T2A, ALU_case2_T2B, ALU_case2_T3A, ALU_case2_T3B, ALU_case2_T4A, ALU_case2_T4B, ALU_case2_T5A, ALU_case2_T5B,
-						ALU_case3_T0A, ALU_case3_T0B, ALU_case3_T1A, ALU_case3_T1B, ALU_case3_T2A, ALU_case3_T2B, ALU_case3_T3A, ALU_case3_T3B, ALU_case3_T4A, ALU_case3_T4B, ALU_case3_T5A, ALU_case3_T5B,
-						
-						branch_reg_init1_T0A, branch_reg_init1_T0B, branch_reg_init1_T1A, branch_reg_init1_T1B, branch_reg_init1_T2A, branch_reg_init1_T2B, branch_reg_init1_T3A, branch_reg_init1_T3B, branch_reg_init1_T4A, branch_reg_init1_T4B, branch_reg_init1_T5A, branch_reg_init1_T5B, 
-						branch_case1_T0A, branch_case1_T0B, branch_case1_T1A, branch_case1_T1B, branch_case1_T2A, branch_case1_T2B, branch_case1_T3A, branch_case1_T3B, branch_case1_T4A, branch_case1_T4B,
-						branch_reg_init2_T0A, branch_reg_init2_T0B, branch_reg_init2_T1A, branch_reg_init2_T1B, branch_reg_init2_T2A, branch_reg_init2_T2B, branch_reg_init2_T3A, branch_reg_init2_T3B, branch_reg_init2_T4A, branch_reg_init2_T4B, branch_reg_init2_T5A, branch_reg_init2_T5B, 
-						branch_reg_init3_T0A, branch_reg_init3_T0B, branch_reg_init3_T1A, branch_reg_init3_T1B, branch_reg_init3_T2A, branch_reg_init3_T2B, branch_reg_init3_T3A, branch_reg_init3_T3B, branch_reg_init3_T4A, branch_reg_init3_T4B, branch_reg_init3_T5A, branch_reg_init3_T5B, 
-						branch_case2_T0A, branch_case2_T0B, branch_case2_T1A, branch_case2_T1B, branch_case2_T2A, branch_case2_T2B, branch_case2_T3A, branch_case2_T3B, branch_case2_T4A, branch_case2_T4B,
-						branch_reg_init4_T0A, branch_reg_init4_T0B, branch_reg_init4_T1A, branch_reg_init4_T1B, branch_reg_init4_T2A, branch_reg_init4_T2B, branch_reg_init4_T3A, branch_reg_init4_T3B, branch_reg_init4_T4A, branch_reg_init4_T4B, branch_reg_init4_T5A, branch_reg_init4_T5B, 
-						branch_case3_T0A, branch_case3_T0B, branch_case3_T1A, branch_case3_T1B, branch_case3_T2A, branch_case3_T2B, branch_case3_T3A, branch_case3_T3B, branch_case3_T4A, branch_case3_T4B,
-						branch_reg_init5_T0A, branch_reg_init5_T0B, branch_reg_init5_T1A, branch_reg_init5_T1B, branch_reg_init5_T2A, branch_reg_init5_T2B, branch_reg_init5_T3A, branch_reg_init5_T3B, branch_reg_init5_T4A, branch_reg_init5_T4B, branch_reg_init5_T5A, branch_reg_init5_T5B,	
-						branch_reg_init6_T0A, branch_reg_init6_T0B, branch_reg_init6_T1A, branch_reg_init6_T1B, branch_reg_init6_T2A, branch_reg_init6_T2B, branch_reg_init6_T3A, branch_reg_init6_T3B, branch_reg_init6_T4A, branch_reg_init6_T4B, branch_reg_init6_T5A, branch_reg_init6_T5B, 
-						branch_case4_T0A, branch_case4_T0B, branch_case4_T1A, branch_case4_T1B, branch_case4_T2A, branch_case4_T2B, branch_case4_T3A, branch_case4_T3B, branch_case4_T4A, branch_case4_T4B,
-						
-						jump_reg_init1_T0A, jump_reg_init1_T0B, jump_reg_init1_T1A, jump_reg_init1_T1B, jump_reg_init1_T2A, jump_reg_init1_T2B, jump_reg_init1_T3A, jump_reg_init1_T3B, jump_reg_init1_T4A, jump_reg_init1_T4B, jump_reg_init1_T5A, jump_reg_init1_T5B, 
-						jump_case1_T0A, jump_case1_T0B, jump_case1_T1A, jump_case1_T1B, jump_case1_T2A, jump_case1_T2B, jump_case1_T3A, jump_case1_T3B,
-						jump_reg_init2_T0A, jump_reg_init2_T0B, jump_reg_init2_T1A, jump_reg_init2_T1B, jump_reg_init2_T2A, jump_reg_init2_T2B, jump_reg_init2_T3A, jump_reg_init2_T3B, jump_reg_init2_T4A, jump_reg_init2_T4B, jump_reg_init2_T5A, jump_reg_init2_T5B, 
-						jump_case2_T0A, jump_case2_T0B, jump_case2_T1A, jump_case2_T1B, jump_case2_T2A, jump_case2_T2B, jump_case2_T3A, jump_case2_T3B,
-						move_reg_init1_T0A, move_reg_init1_T0B, move_reg_init1_T1A, move_reg_init1_T1B, move_reg_init1_T2A, move_reg_init1_T2B, move_reg_init1_T3A, move_reg_init1_T3B, move_reg_init1_T4A, move_reg_init1_T4B, move_reg_init1_T5A, move_reg_init1_T5B, 
-						move_reg_init2_T0A, move_reg_init2_T0B, move_reg_init2_T1A, move_reg_init2_T1B, move_reg_init2_T2A, move_reg_init2_T2B, move_reg_init2_T3A, move_reg_init2_T3B, move_reg_init2_T4A, move_reg_init2_T4B, move_reg_init2_T5A, move_reg_init2_T5B, 
-						mul_T0A, mul_T0B, mul_T1A, mul_T1B, mul_T2A, mul_T2B, mul_T3A, mul_T3B, mul_T4A, mul_T4B, mul_T5A, mul_T5B, mul_T6A, mul_T6B,
-						mfhi_T0A, mfhi_T0B, mfhi_T1A, mfhi_T1B, mfhi_T2A, mfhi_T2B, mfhi_T3A, mfhi_T3B,
-						mflo_T0A, mflo_T0B, mflo_T1A, mflo_T1B, mflo_T2A, mflo_T2B, mflo_T3A, mflo_T3B,
-						
-						In_port_init_T0A, In_port_init_T0B,
-						in_T0A, in_T0B, in_T1A, in_T1B, in_T2A, in_T2B, in_T3A, in_T3B,
-						out_T0A, out_T0B, out_T1A, out_T1B, out_T2A, out_T2B, out_T3A, out_T3B						
-						
-						);
-  SIGNAL Present_state: State := defaultA;
  
  -- component instantiation of the datapath
 COMPONENt datapath_phase2 is
