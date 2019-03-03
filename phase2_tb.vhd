@@ -156,7 +156,36 @@ END COMPONENT ;
  DUT : phase1
 --port mapping: between the dut and the testbench signals
   PORT MAP (
-  
+  	R0value => R0_out_tb,
+			R1value => R1_out_tb,
+			R2value => R2_out_tb,
+			R3value => R3_out_tb,
+			R4value => R4_out_tb,
+			R5value => R5_out_tb,
+			R6value => R6_out_tb,
+			R7value => R7_out_tb,
+			R8value => R8_out_tb,
+			R9value => R9_out_tb,
+			R10value => R10_out_tb,
+			R11value => R11_out_tb,
+			R12value => R12_out_tb,
+			R13value => R13_out_tb,
+			R14value => R14_out_tb,
+			R15value => R15_out_tb,
+			BusMuxOut => BusMuxOut_tb,
+			HIvalue => HI_out_tb,
+			LOvalue => LO_out_tb,
+			ZHout => ZHigh_out_tb,
+			ZLout => Zlow_out_tb,
+			PCout => PC_out_tb,
+			MDR_out => MDR_out_tb,
+			BusMux_inport => in_port_out_tb,
+			C_sign_out => C_sign_out_tb,------------
+			MDR_in => MDR_in_tb,
+			Zin => Z_in_tb,
+			IR_out => IR_out_tb,-----------
+			MAR_out => MAR_out_tb,--------------
+			Y_out => Y_out_tb,---------------
  
 	  
 	  
