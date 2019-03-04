@@ -6,7 +6,7 @@ package mem_init is
 type mem is array (0 to 511) of std_logic_vector(31 downto 0);
 
 constant initial_mem : mem := ( 
-x"00000057", --0	ld R1, $75; R3 = $87				
+x"00000057", --0	ld R1, $75; R1 = $75				
 x"00000000", --1	
 x"00000000", --2	
 x"00000000", --3	
