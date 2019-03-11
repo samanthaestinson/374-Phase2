@@ -1,0 +1,123 @@
+Library ieee;
+USE ieee.std_logic_1164.all;
+
+Entity control_unit is
+	Port(Clock, Reset, Stop, ..., Con_FF: in std_logig;
+		IR: in std_logic_vector(31 downto 0);
+		Gra, Grb, Grc, Rin, .., Rout: out std_logic;
+		Yin, Zin, PCout, Inc, ..., MARin: out std_logic;
+		Read, Write, ..., Clear: out std_logic;
+		ADD, AND, ..., SHR: out std_logic);
+end control_unit;
+
+Architecture Behaviour of control_unit is
+		type State is (reset_state, fetch0, fetch1, fetch2, add3, add4, add5, ...);
+		signal Present_state:		State;
+	Begin
+		process(Clock, Reset)
+		Begin
+			if (reset = '1') then
+				Present_state <= Reset_state;
+			elsif (rising_edge(Clock)) then
+				Case Present_state is
+					when Reset_state =>
+						Present_state <= fetch0;
+					when fetch0 =>
+						Present_state <= fetch1;
+					when fetch1 =>
+						Present_state <= fetch2;
+					when add3 =>
+						Present_state <= add4;
+					when add4 =>
+						Present_state <= add5;
+						.
+						.
+						.
+					when fetch2 =>
+						case IR(31 downto 27) is
+							when "00011" => -- this is the add instruction
+								Present_state <= add3;
+							when "00100" =>
+								.
+								.
+								.
+								when others =>
+							end case
+						when others =>
+					end case;
+				end if;
+		end process;
+		
+BEGIN 
+	CASE Present_state IS --assert the required signals in each state 
+		WHEN Reset_state =>
+			Gra<='0';  --initialize the signals
+			Grb<='0';
+			Grc<='0'
+			Yin<='0';
+			.
+			.
+			.
+			.
+		WHEN fetch0 =>
+			PCout<='1'; --see if you need to de-assert these signals
+			MARin<='1';
+			IncPC<='1';
+			Zin<='1';
+
+		WHEN add3=>
+			Grb<='1';
+			Rout<='1';
+			Yin<='1';
+
+			.
+			.
+			.
+			.
+		WHEN nop=>
+		WHEN OTHERS=>
+	END CASE;
+END PROCESS;
+END Behavior;
+//this is the verilog sample code for method 1 for the control unit
+'timescale 1ns/10ps
+module control_unit(
+	output reg Gra,Grb,Grc,Rin,...,Rout, //her you will define the inpouts and outputs to your control unit
+	Yin,Zin,PCout,IncPC,....,MARin,
+	Read,Write,...,Clear,
+	ADD,AND,...,SHR,
+input [31:0] IR,
+input Clock, Reset,Stop,....Con_FF);
+parameter Reset_state=4'b0000,fetch0=4'b0001,fetch1=4'b0010,fetch2=4'b0011,
+add3=4'b0100,add4=4'b0101,add5=4'b0110,...;
+reg [3:0] Present_state=Reset_state; //adjust the bit pattern based on the number of states
+
+---phase 3 method 1---
+---continue...---
+always@(Present_state)
+begin
+	case(Present_state)
+	Reset_state: begin
+	---init signals---
+		Gra<=0;
+		Grb<=0;
+		Grc<=0;
+		Yin<0;
+		---...---
+	end
+	fetch0: begin
+	---deassert signals?---
+		PCout<=1;
+		MARin<=1;
+		IncPC<=1;
+		Zin<=0;
+	end
+	add3:begin
+		Grb<=1;
+		Rout<=1;
+		Yin<=0;
+	end
+	---...---
+	endcase
+end
+endmodule
